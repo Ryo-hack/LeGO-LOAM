@@ -222,13 +222,30 @@ public:
             thisPoint.y = laserCloudIn->points[i].y;
             thisPoint.z = laserCloudIn->points[i].z;
             // find the row and column index in the iamge for this point
-            if (useCloudRing == true){
-                rowIdn = laserCloudInRing->points[i].ring;
-            }
-            else{
+            
+            if (useVLP32 == true){
                 verticalAngle = atan2(thisPoint.z, sqrt(thisPoint.x * thisPoint.x + thisPoint.y * thisPoint.y)) * 180 / M_PI;
-                rowIdn = (verticalAngle + ang_bottom) / ang_res_y;
+                float angle = (verticalAngle + ang_bottom);
+                //最近傍点
+                int index_min_save =0 ;
+                double min_save = 99999.99999 ;
+                for (int i = 0;i<32;i++){
+                    if (std::abs(angle-vlp_angle[i])<min_save){
+                        min_save = std::abs(angle-vlp_angle[i]);
+                        index_min_save = 31-i ;
+                    }
+                }
+                rowIdn = index_min_save ;
+            }else{
+                    if (useCloudRing == true){
+                    rowIdn = laserCloudInRing->points[i].ring;
+                }
+                else{
+                    verticalAngle = atan2(thisPoint.z, sqrt(thisPoint.x * thisPoint.x + thisPoint.y * thisPoint.y)) * 180 / M_PI;
+                    rowIdn = (verticalAngle + ang_bottom) / ang_res_y;
+                }
             }
+            
             if (rowIdn < 0 || rowIdn >= N_SCAN)
                 continue;
 
@@ -276,7 +293,7 @@ public:
                     groundMat.at<int8_t>(i,j) = -1;
                     continue;
                 }
-                    
+                      
                 diffX = fullCloud->points[upperInd].x - fullCloud->points[lowerInd].x;
                 diffY = fullCloud->points[upperInd].y - fullCloud->points[lowerInd].y;
                 diffZ = fullCloud->points[upperInd].z - fullCloud->points[lowerInd].z;
