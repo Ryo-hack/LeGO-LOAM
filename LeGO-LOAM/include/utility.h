@@ -52,8 +52,6 @@ typedef pcl::PointXYZI  PointType;
 
 extern const string pointCloudTopic = "/velodyne_points";
 extern const string imuTopic = "/imu/data";
-extern const bool useVLP32 = true ;
-extern const float vlp_angle[32] = {15.0,10.333,7.0,4.667,3.333,2.33,1.667,1.333,1.000,0.667,0.333,0.000,-0.333,-0.667,-1.000,-1.333,-1.667,-2.00,-2.333,-2.667,-3.000,-3.333,-3.667,-4.000,-4.667,-5.333,-6.148,-7.254,-8.843,-11.310,-15.639,-25.000};//続きはかく
 
 // Save pcd
 // unused setting in run.launch
@@ -72,19 +70,21 @@ extern const bool useCloudRing = true; // if true, ang_res_y and ang_bottom are 
 
 // HDL-32E
 // extern const int N_SCAN = 32;
-//extern const int Horizon_SCAN = 1800;
+// extern const int Horizon_SCAN = 1800;
 // extern const float ang_res_x = 360.0/float(Horizon_SCAN);
 // extern const float ang_res_y = 41.33/float(N_SCAN-1);
 // extern const float ang_bottom = 30.67;
 // extern const int groundScanInd = 20;
 
 // VLP-32C
+ extern const bool useVLP32 = true ;//false;
+ extern const float vlp_angle[32] = {15.000,10.333,7.000,4.667,3.333,2.333,1.667,1.333,1.000,0.667,0.333,0.000,-0.333,-0.667,-1.000,-1.333,-1.667,-2.00,-2.333,-2.667,-3.000,-3.333,-3.667,-4.000,-4.667,-5.333,-6.148,-7.254,-8.843,-11.310,-15.639,-25.000};
  extern const int N_SCAN = 32;
  extern const int Horizon_SCAN = 1800;
- extern const float ang_res_x = 0.2;
+ extern const float ang_res_x = 360.0/float(Horizon_SCAN);
  extern const float ang_res_y = 1.25;
- extern const float ang_bottom = 25;
- extern const int groundScanInd = 12;
+ extern const float ang_bottom = 25;    
+ extern const int groundScanInd = 12; //<<多分処理関係ある?
 
 
 // VLS-128

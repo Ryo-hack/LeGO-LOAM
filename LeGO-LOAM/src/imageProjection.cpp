@@ -225,18 +225,21 @@ public:
             
             if (useVLP32 == true){
                 verticalAngle = atan2(thisPoint.z, sqrt(thisPoint.x * thisPoint.x + thisPoint.y * thisPoint.y)) * 180 / M_PI;
-                float angle = (verticalAngle + ang_bottom);
-                //最近傍点
+                //float angle = (verticalAngle + ang_bottom);
+                float angle = verticalAngle ;//<<こうでは？？
+                //最近傍点処理///////////
                 int index_min_save =0 ;
-                double min_save = 99999.99999 ;
-                for (int i = 0;i<32;i++){
-                    if (std::abs(angle-vlp_angle[i])<min_save){
-                        min_save = std::abs(angle-vlp_angle[i]);
-                        index_min_save = 31-i ;
+                double min_save = 999999999999.99 ;
+                    for (int i_angle = 0;i_angle <32; i_angle++){
+                        if (std::abs(angle-vlp_angle[i_angle])<min_save){
+                            min_save = std::abs(angle-vlp_angle[i_angle]);
+                            index_min_save = 31-i_angle ;
+                        }
                     }
-                }
+                ////////////////////////
                 rowIdn = index_min_save ;
-            }else{
+            }
+            else{
                     if (useCloudRing == true){
                     rowIdn = laserCloudInRing->points[i].ring;
                 }
